@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interação com Formulários</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Cadastro de Titular</h1>
+    </header>
+    <section>
+        <form action="../projetoConta/backend/main/main.php" method="post">
+            <h2>Cadastro de Pessoa Titular</h2>
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" maxlength="120" required>
+            <label for="idade">Idade:</label>
+            <input type="number" name="idade" max="999" required>
+            <label for="cpf">CPF:</label>
+            <input type="text" name="cpf" maxlength="14" required>
+            <input type="submit" value="Cadastrar">
+        </form>
+    </section>
+    
+</body>
+</html>
