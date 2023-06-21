@@ -1,6 +1,6 @@
 <?php
 
-namespace class;
+namespace classe;
 
 class Cliente {
     private $nome;
