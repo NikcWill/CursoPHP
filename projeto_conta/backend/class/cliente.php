@@ -1,5 +1,7 @@
 <?php
 
+namespace class;
+
 class Cliente {
     private $nome;
     private $idade;

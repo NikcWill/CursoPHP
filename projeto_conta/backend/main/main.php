@@ -11,7 +11,8 @@
     <h1>Main</h1>
 
     <?php 
-        require '../classes/cliente.php';
+        
+        use Cliente;
 
         $nome = $_POST["nome"];
         $idade = $_POST["idade"];
