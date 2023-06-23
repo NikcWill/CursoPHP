@@ -15,36 +15,34 @@
         <h1>Main</h1>
     </header>
     <main>
-        </html> 
+        
 <?php
 
 use classe\Cliente;
 
 require '../main/conta.php';
-
 session_start();
+
 
 // Verifica se a instância da classe Conta já existe na sessão
 if (!isset($_SESSION['contaExemplo'])) {
     // Se não existir, cria uma nova instância e armazena na sessão
     $clienteEspecial = new Cliente($_GET["nome"], $_GET["idade"], $_GET["cpf"]);
-    $contaExemplo = new Conta($clienteEspecial, rand(1000, 9999), rand(10000, 99999));
+    $contaExemplo = new Conta($clienteEspecial, rand(10000, 99999), rand(100, 999));
     $_SESSION['contaExemplo'] = $contaExemplo;
-}else {
-        // Se já existir, recupera a instância da sessão
-        $contaExemploSession = $_SESSION['contaExemplo'];
-    
-        // Verificar se a instância da sessão é diferente da nova instância
-        if ($contaExemploSession !== $contaExemplo) {
-            // Substituir a instância da sessão pela nova instância
-            $_SESSION['contaExemplo'] = $contaExemplo;
-        }
-    }
+} else {
+    // Se já existir, recupera a instância da sessão
+    $contaExemplo = $_SESSION['contaExemplo'];
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verifica se o formulário de depósito foi enviado
     if (isset($_POST["txt_valorDeposito"])) {
         $valorDeposito = $_POST["txt_valorDeposito"];
+        $valorDeposito = str_replace(',', '.', $valorDeposito);
+        $valorDeposito = floatval($valorDeposito);
+        if (isset($valorDeposito)) {
         $contaExemplo->depositar($valorDeposito);
 
         // Gerar código JavaScript para exibir a caixa de diálogo
@@ -55,11 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
         </script>";
     }
+    }
 
     // Verifica se o formulário de saque foi enviado
     if (isset($_POST['txt_valorSaque'])) {
         $valorSaque = $_POST['txt_valorSaque'];
-
+        $valorSaque = str_replace(',', '.', $valorSaque);
+        $valorSaque = floatval($valorSaque);
         if ($contaExemplo->getSaldo() >= $valorSaque) {
             $contaExemplo->sacar($valorSaque);
 
@@ -82,17 +82,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+    
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verificar se o botão de encerrar a sessão foi clicado
     if (isset($_POST['btn_encerrar_sessao'])) {
         // Encerrar a sessão e limpar os dados
-        session_destroy();
-
         // Redirecionar para o index.html
-        header('Location: ../../frontend/pages/indexCliente.html');
+        header('Location: ../../frontend/pages/indexCliente.php');
         exit;
     }
 }
+
 
 
 
@@ -156,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
     </section>
     <section>
-    <form action="../../frontend/pages/indexCliente.html" method="post">
+    <form action="../../frontend/pages/indexCliente.php" method="post">
     <button type="submit" name="btn_encerrar_sessao">Encerrar Sessão</button>
     </form>
     </section>

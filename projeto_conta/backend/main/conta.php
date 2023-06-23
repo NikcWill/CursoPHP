@@ -1,10 +1,10 @@
 
     <?php
-    
+
     require '../class/cliente.php';
     use classe\Cliente;
 
-    class Conta {
+        class Conta {
         
         private $agencia;
         private $contaCorrente;

@@ -1,3 +1,8 @@
+<?php
+session_start();
+session_destroy();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -21,7 +26,7 @@
             <label for="nome">Nome:</label>
             <input type="text" name="nome" minlength="3" maxlength="120" required>
             <label for="idade">Idade:</label>
-            <input type="number" name="idade" min="18" max="999" required>
+            <input type="number" name="idade" min="18" max="120" required>
             <label for="cpf">CPF:</label>
             
             <input type="text" name="cpf" id="cpf" minlength="14" maxlength="14"  required>
@@ -37,6 +42,6 @@
             $('#cpf').mask('999.999.999-99');
         });
     </script>
-    
+    session_destroy();
 </body>
 </html>
