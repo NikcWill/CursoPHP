@@ -5,3 +5,4 @@ function esconder(el){
 function mostra(el){
     document.getElementById(el).style.display = "block"
 }
+

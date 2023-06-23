@@ -16,7 +16,7 @@
     </header>
     <main>
         </html> 
-        <?php
+<?php
 
 use classe\Cliente;
 
@@ -28,14 +28,18 @@ session_start();
 if (!isset($_SESSION['contaExemplo'])) {
     // Se não existir, cria uma nova instância e armazena na sessão
     $clienteEspecial = new Cliente($_GET["nome"], $_GET["idade"], $_GET["cpf"]);
-    $contaExemplo = new Conta($clienteEspecial, 32, 32);
+    $contaExemplo = new Conta($clienteEspecial, rand(1000, 9999), rand(10000, 99999));
     $_SESSION['contaExemplo'] = $contaExemplo;
-} else {
-    // Se já existir, recupera a instância da sessão
-    $contaExemplo = $_SESSION['contaExemplo'];
-}
-
-$auxiliar = true;
+}else {
+        // Se já existir, recupera a instância da sessão
+        $contaExemploSession = $_SESSION['contaExemplo'];
+    
+        // Verificar se a instância da sessão é diferente da nova instância
+        if ($contaExemploSession !== $contaExemplo) {
+            // Substituir a instância da sessão pela nova instância
+            $_SESSION['contaExemplo'] = $contaExemplo;
+        }
+    }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verifica se o formulário de depósito foi enviado
@@ -73,9 +77,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     alert('Falha ao Sacar! Saldo insuficiente! Valor: ' + valorSaque + ' Maior que o saldo');
                 });
             </script>";
+            
         }
     }
 }
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Verificar se o botão de encerrar a sessão foi clicado
+    if (isset($_POST['btn_encerrar_sessao'])) {
+        // Encerrar a sessão e limpar os dados
+        session_destroy();
+
+        // Redirecionar para o index.html
+        header('Location: ../../frontend/pages/indexCliente.html');
+        exit;
+    }
+}
+
+
 
 ?>
 <section>
@@ -135,6 +154,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="submit" value="Depositar">
         </form>
         
+    </section>
+    <section>
+    <form action="../../frontend/pages/indexCliente.html" method="post">
+    <button type="submit" name="btn_encerrar_sessao">Encerrar Sessão</button>
+    </form>
     </section>
 
 </main>
